@@ -34,7 +34,7 @@ const Contact = () => {
       icon: Mail,
       title: 'Email',
       details: ['info@kbnetworks.mv', 'support@kbnetworks.mv'],
-      gradient: 'from-purple-500 to-pink-400'
+      gradient: 'from-blue-600 to-blue-400'
     },
     {
       icon: MapPin,
@@ -213,7 +213,8 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group"
+                  className="w-full text-white px-8 py-4 rounded-xl text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 group"
+                  style={{background: 'linear-gradient(90deg, #3b82f6, #2563eb)'}}
                 >
                   Send Message
                   <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />

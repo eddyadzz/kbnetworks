@@ -28,11 +28,11 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
+    <section id="about" className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-blue-800 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -43,7 +43,7 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             Leading Technology Partner
             <br />
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">in the Maldives</span>
+            <span className="bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent">in the Maldives</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             With over a decade of experience, KB Networks has been at the forefront of delivering 

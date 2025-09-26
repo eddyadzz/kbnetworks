@@ -30,10 +30,10 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 group">
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-110">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-110" style={{background: 'linear-gradient(135deg, #3b82f6, #2563eb)'}}>
                 <Wifi className="w-6 h-6 text-white" />
               </div>
-              <div className="absolute -inset-1 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute -inset-1 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.2))'}}></div>
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
@@ -52,10 +52,10 @@ const Header = () => {
                 className="relative text-gray-700 hover:text-blue-600 transition-all duration-300 group py-2"
               >
                 {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300" style={{background: 'linear-gradient(90deg, #3b82f6, #2563eb)'}}></span>
               </a>
             ))}
-            <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <button className="text-white px-6 py-2.5 rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl" style={{background: 'linear-gradient(90deg, #3b82f6, #2563eb)'}}>
               Get Quote
             </button>
           </div>
@@ -83,7 +83,7 @@ const Header = () => {
                   {item.name}
                 </a>
               ))}
-              <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+              <button className="w-full text-white px-6 py-2.5 rounded-full transition-all duration-300" style={{background: 'linear-gradient(90deg, #3b82f6, #2563eb)'}}>
                 Get Quote
               </button>
             </div>

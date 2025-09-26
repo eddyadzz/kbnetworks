@@ -14,17 +14,23 @@ const Hero = () => {
 
   const floatingElements = [
     { icon: Shield, color: 'from-blue-500 to-cyan-400', delay: '0s', position: 'top-20 left-20' },
-    { icon: Monitor, color: 'from-purple-500 to-pink-400', delay: '1s', position: 'top-40 right-20' },
+    { icon: Monitor, color: 'from-blue-600 to-blue-400', delay: '1s', position: 'top-40 right-20' },
     { icon: Wifi, color: 'from-green-500 to-emerald-400', delay: '2s', position: 'bottom-40 left-40' }
   ];
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-blue-800">
       {/* Animated Background */}
       <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+          style={{
+            backgroundImage: 'url(https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=1920)'
+          }}
+        ></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,0.1),transparent)] animate-pulse"></div>
         <div 
-          className="absolute w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"
+          className="absolute w-96 h-96 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-full blur-3xl animate-pulse"
           style={{
             transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
           }}
@@ -68,7 +74,7 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <button className="group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-2xl flex items-center gap-2">
+            <button className="group bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-2xl flex items-center gap-2" style={{backgroundColor: '#2563eb'}}>
               Explore Services
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </button>

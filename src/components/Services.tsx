@@ -16,7 +16,7 @@ const Services = () => {
       title: 'IT Solutions',
       description: 'Comprehensive IT infrastructure services including system integration, software solutions, and technical support for modern businesses.',
       features: ['System Integration', 'Software Solutions', '24/7 Support', 'Cloud Services'],
-      gradient: 'from-purple-500 to-pink-400',
+      gradient: 'from-blue-600 to-blue-400',
       image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=500'
     },
     {
@@ -117,7 +117,7 @@ const Services = () => {
 
         {/* CTA Section */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-8 md:p-12 text-white shadow-2xl max-w-4xl mx-auto transform hover:scale-105 transition-transform duration-300">
+          <div className="rounded-3xl p-8 md:p-12 text-white shadow-2xl max-w-4xl mx-auto transform hover:scale-105 transition-transform duration-300" style={{background: 'linear-gradient(90deg, #3b82f6, #2563eb)'}}>
             <h3 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Transform Your Business?
             </h3>
