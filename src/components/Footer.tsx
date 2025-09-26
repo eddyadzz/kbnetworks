@@ -23,7 +23,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-slate-900 via-blue-900 to-blue-800 text-white relative overflow-hidden">
+    <footer className="bg-gradient-to-br from-slate-900 via-blue-900 to-blue-800 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 text-white relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
@@ -44,27 +44,27 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="text-2xl font-bold">KB Networks</h3>
-                <p className="text-blue-200 text-sm">Technology Solutions</p>
+                <p className="text-blue-200 dark:text-blue-300 text-sm">Technology Solutions</p>
               </div>
             </div>
             
-            <p className="text-gray-300 mb-6 leading-relaxed max-w-md">
+            <p className="text-gray-300 dark:text-gray-400 mb-6 leading-relaxed max-w-md">
               Leading technology solutions provider in the Maldives, specializing in CCTV security systems, 
               IT infrastructure, and networking services for over a decade.
             </p>
 
             {/* Contact Info */}
             <div className="space-y-3">
-              <div className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-300">
-                <Phone className="w-5 h-5 text-blue-400" />
+              <div className="flex items-center gap-3 text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-300">
+                <Phone className="w-5 h-5 text-blue-400 dark:text-blue-300" />
                 <span>+960 330-0000</span>
               </div>
-              <div className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-300">
-                <Mail className="w-5 h-5 text-blue-400" />
+              <div className="flex items-center gap-3 text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-300">
+                <Mail className="w-5 h-5 text-blue-400 dark:text-blue-300" />
                 <span>info@kbnetworks.mv</span>
               </div>
-              <div className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors duration-300">
-                <MapPin className="w-5 h-5 text-blue-400" />
+              <div className="flex items-center gap-3 text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-300">
+                <MapPin className="w-5 h-5 text-blue-400 dark:text-blue-300" />
                 <span>Malé, Maldives</span>
               </div>
             </div>
@@ -78,7 +78,7 @@ const Footer = () => {
                 <li key={index}>
                   <a 
                     href="#services"
-                    className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block"
+                    className="text-gray-300 dark:text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-300 block"
                   >
                     {service}
                   </a>
@@ -95,7 +95,7 @@ const Footer = () => {
                 <li key={index}>
                   <a 
                     href={`#${link.toLowerCase().replace(' ', '')}`}
-                    className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block"
+                    className="text-gray-300 dark:text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-300 block"
                   >
                     {link}
                   </a>
@@ -105,7 +105,7 @@ const Footer = () => {
 
             {/* Social Links */}
             <div className="mt-8">
-              <h5 className="text-sm font-medium mb-4 text-gray-400 uppercase tracking-wide">Follow Us</h5>
+              <h5 className="text-sm font-medium mb-4 text-gray-400 dark:text-gray-500 uppercase tracking-wide">Follow Us</h5>
               <div className="flex gap-3">
                 {[
                   { icon: Facebook, color: 'hover:bg-blue-500', label: 'Facebook' },
@@ -114,7 +114,7 @@ const Footer = () => {
                 ].map((social, index) => (
                   <button
                     key={index}
-                    className={`w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110 hover:-rotate-12 ${social.color}`}
+                    className={`w-10 h-10 bg-white/10 dark:bg-white/5 rounded-lg flex items-center justify-center text-gray-300 dark:text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110 hover:-rotate-12 ${social.color}`}
                     aria-label={social.label}
                   >
                     <social.icon className="w-4 h-4" />
@@ -127,14 +127,14 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/10 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-gray-300 text-sm">
+          <div className="text-gray-300 dark:text-gray-400 text-sm">
             © 2024 KB Networks. All rights reserved. | Proudly serving the Maldives 🏝️
           </div>
           
           {/* Scroll to Top */}
           <button
             onClick={scrollToTop}
-            className="group bg-white/10 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 transition-all duration-300 transform hover:scale-110"
+            className="group bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-110"
             aria-label="Scroll to top"
           >
             <ArrowUp className="w-5 h-5 text-white group-hover:-translate-y-1 transition-transform duration-300" />

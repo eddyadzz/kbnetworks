@@ -59,7 +59,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section id="contact" className="py-24 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_70%,theme(colors.blue.500),transparent_50%)]"></div>
@@ -68,15 +68,15 @@ const Contact = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium mb-4">
             Get In Touch
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Ready to Start Your
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Technology Journey?</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Connect with our experts today for a free consultation and discover how we can 
             transform your business with cutting-edge technology solutions.
           </p>
@@ -89,34 +89,34 @@ const Contact = () => {
               {contactInfo.map((info, index) => (
                 <div
                   key={index}
-                  className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-gray-100"
+                  className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl dark:shadow-gray-900/50 transition-all duration-300 transform hover:scale-105 border border-gray-100 dark:border-gray-700"
                 >
                   <div className={`w-14 h-14 bg-gradient-to-br ${info.gradient} rounded-xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform duration-300 shadow-lg`}>
                     <info.icon className="w-7 h-7 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">{info.title}</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{info.title}</h3>
                   {info.details.map((detail, detailIndex) => (
-                    <p key={detailIndex} className="text-gray-600 mb-1">{detail}</p>
+                    <p key={detailIndex} className="text-gray-600 dark:text-gray-300 mb-1">{detail}</p>
                   ))}
                 </div>
               ))}
             </div>
 
             {/* Map Placeholder */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 group hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Find Us</h3>
-              <div className="h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center group-hover:from-blue-200 group-hover:to-purple-200 transition-all duration-300">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 group hover:shadow-xl dark:shadow-gray-900/50 transition-shadow duration-300">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Find Us</h3>
+              <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-xl flex items-center justify-center group-hover:from-blue-200 group-hover:to-blue-300 dark:group-hover:from-blue-800/40 dark:group-hover:to-blue-700/40 transition-all duration-300">
                 <div className="text-center">
-                  <MapPin className="w-12 h-12 text-blue-600 mx-auto mb-2" />
-                  <p className="text-gray-600">Interactive Map</p>
-                  <p className="text-sm text-gray-500">Malé, Maldives</p>
+                  <MapPin className="w-12 h-12 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
+                  <p className="text-gray-600 dark:text-gray-300">Interactive Map</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Malé, Maldives</p>
                 </div>
               </div>
             </div>
 
             {/* Social Links */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Follow Us</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Follow Us</h3>
               <div className="flex gap-4">
                 {[
                   { icon: Facebook, color: 'hover:bg-blue-500', label: 'Facebook' },
@@ -125,7 +125,7 @@ const Contact = () => {
                 ].map((social, index) => (
                   <button
                     key={index}
-                    className={`w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:text-white transition-all duration-300 transform hover:scale-110 hover:-rotate-12 ${social.color}`}
+                    className={`w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110 hover:-rotate-12 ${social.color}`}
                     aria-label={social.label}
                   >
                     <social.icon className="w-5 h-5" />
@@ -136,59 +136,59 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 relative group hover:shadow-2xl transition-shadow duration-300">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur-lg opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+          <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 relative group hover:shadow-2xl dark:shadow-gray-900/50 transition-shadow duration-300">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-3xl blur-lg opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
             
             <div className="relative">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Send Us a Message</h3>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="group">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 dark:group-hover:border-blue-400"
                       placeholder="Your full name"
                       required
                     />
                   </div>
                   <div className="group">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone</label>
                     <input
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 dark:group-hover:border-blue-400"
                       placeholder="+960 XXX-XXXX"
                     />
                   </div>
                 </div>
 
                 <div className="group">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 dark:group-hover:border-blue-400"
                     placeholder="your.email@example.com"
                     required
                   />
                 </div>
 
                 <div className="group">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Service Interested</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Service Interested</label>
                   <select
                     name="service"
                     value={formData.service}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 dark:group-hover:border-blue-400"
                     required
                   >
                     <option value="">Select a service</option>
@@ -199,13 +199,13 @@ const Contact = () => {
                 </div>
 
                 <div className="group">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 group-hover:border-blue-300 dark:group-hover:border-blue-400"
                     placeholder="Tell us about your project requirements..."
                     required
                   ></textarea>

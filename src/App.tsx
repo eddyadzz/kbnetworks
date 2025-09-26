@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -29,14 +30,16 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      <Hero />
-      <Services />
-      <About />
-      <Contact />
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen">
+        <Header />
+        <Hero />
+        <Services />
+        <About />
+        <Contact />
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
 

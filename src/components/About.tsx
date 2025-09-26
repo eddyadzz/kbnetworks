@@ -28,7 +28,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-blue-800 relative overflow-hidden">
+    <section id="about" className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-blue-800 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -37,7 +37,7 @@ const About = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-blue-200 text-sm font-medium mb-4 border border-white/20">
+          <span className="inline-block px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-full text-blue-200 dark:text-blue-300 text-sm font-medium mb-4 border border-white/20 dark:border-white/10">
             About KB Networks
           </span>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
@@ -45,7 +45,7 @@ const About = () => {
             <br />
             <span className="bg-gradient-to-r from-blue-400 to-blue-300 bg-clip-text text-transparent">in the Maldives</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-300 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             With over a decade of experience, KB Networks has been at the forefront of delivering 
             innovative technology solutions across the beautiful islands of the Maldives.
           </p>
@@ -56,13 +56,13 @@ const About = () => {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="group bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-500 transform hover:scale-105 hover:-rotate-2"
+              className="group bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-white/10 hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:-rotate-2"
             >
               <div className={`w-16 h-16 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform duration-300 shadow-xl`}>
                 <stat.icon className="w-8 h-8 text-white" />
               </div>
               <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
-              <div className="text-gray-300">{stat.label}</div>
+              <div className="text-gray-300 dark:text-gray-400">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -75,13 +75,13 @@ const About = () => {
               Your Trusted Technology Partner
             </h3>
             <div className="space-y-6 mb-8">
-              <p className="text-lg text-gray-300 leading-relaxed">
+              <p className="text-lg text-gray-300 dark:text-gray-400 leading-relaxed">
                 Since our establishment, KB Networks has been dedicated to bringing world-class 
                 technology solutions to the Maldives. We understand the unique challenges of 
                 island connectivity and have developed specialized expertise in marine and 
                 tropical environments.
               </p>
-              <p className="text-lg text-gray-300 leading-relaxed">
+              <p className="text-lg text-gray-300 dark:text-gray-400 leading-relaxed">
                 Our team of certified professionals combines international standards with 
                 local expertise, ensuring every project is executed with precision and 
                 long-term reliability in mind.
@@ -99,7 +99,7 @@ const About = () => {
                   </div>
                   <div>
                     <h4 className="text-xl font-semibold text-white mb-2">{value.title}</h4>
-                    <p className="text-gray-300">{value.description}</p>
+                    <p className="text-gray-300 dark:text-gray-400">{value.description}</p>
                   </div>
                 </div>
               ))}
@@ -117,9 +117,9 @@ const About = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
               
               {/* Floating Elements */}
-              <div className="absolute top-6 right-6 bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+              <div className="absolute top-6 right-6 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 dark:border-white/10">
                 <div className="text-2xl font-bold text-white">🏝️</div>
-                <div className="text-sm text-white/80">Maldives</div>
+                <div className="text-sm text-white/80 dark:text-white/70">Maldives</div>
               </div>
             </div>
             

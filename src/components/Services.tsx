@@ -30,7 +30,7 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section id="services" className="py-24 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,theme(colors.blue.500),transparent_70%)]"></div>
@@ -39,15 +39,15 @@ const Services = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-medium mb-4">
+          <span className="inline-block px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium mb-4">
             Our Services
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Comprehensive Technology
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Solutions</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             From security surveillance to IT infrastructure, we provide end-to-end technology solutions 
             tailored for businesses across the Maldives.
           </p>
@@ -57,7 +57,7 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-rotate-1"
+              className="group relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 transition-all duration-500 transform hover:scale-105 hover:-rotate-1"
               style={{ 
                 perspective: '1000px',
                 transformStyle: 'preserve-3d'
@@ -85,10 +85,10 @@ const Services = () => {
 
               {/* Content */}
               <div className="p-8 relative">
-                <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                   {service.description}
                 </p>
 
@@ -97,7 +97,7 @@ const Services = () => {
                   {service.features.map((feature, featureIndex) => (
                     <div key={featureIndex} className="flex items-center gap-3">
                       <div className={`w-2 h-2 bg-gradient-to-r ${service.gradient} rounded-full`}></div>
-                      <span className="text-gray-700 font-medium">{feature}</span>
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -105,12 +105,12 @@ const Services = () => {
                 {/* CTA */}
                 <button className={`group/btn flex items-center gap-2 text-transparent bg-gradient-to-r ${service.gradient} bg-clip-text font-semibold hover:gap-3 transition-all duration-300`}>
                   Learn More
-                  <ArrowRight className="w-4 h-4 text-blue-500 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                  <ArrowRight className="w-4 h-4 text-blue-500 dark:text-blue-400 group-hover/btn:translate-x-1 transition-transform duration-300" />
                 </button>
               </div>
 
               {/* 3D Border Effect */}
-              <div className="absolute inset-0 rounded-3xl border border-gray-200 group-hover:border-transparent transition-colors duration-300"></div>
+              <div className="absolute inset-0 rounded-3xl border border-gray-200 dark:border-gray-700 group-hover:border-transparent transition-colors duration-300"></div>
             </div>
           ))}
         </div>
@@ -124,7 +124,7 @@ const Services = () => {
             <p className="text-xl mb-8 opacity-90">
               Get a free consultation and discover how our technology solutions can enhance your operations.
             </p>
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <button className="bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
               Schedule Consultation
             </button>
           </div>
