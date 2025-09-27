@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Shield, Wifi, Monitor } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import QuoteModal from './QuoteModal';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,7 +59,7 @@ const Header = () => {
               </a>
             ))}
             <button className="text-white px-6 py-2.5 rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl" style={{background: 'linear-gradient(90deg, #3b82f6, #2563eb)'}}>
-              Get Quote
+              <span onClick={() => setIsQuoteModalOpen(true)}>Get Quote</span>
             </button>
           </div>
 
@@ -90,7 +92,7 @@ const Header = () => {
                 </a>
               ))}
               <button className="w-full text-white px-6 py-2.5 rounded-full transition-all duration-300" style={{background: 'linear-gradient(90deg, #3b82f6, #2563eb)'}}>
-                Get Quote
+                <span onClick={() => setIsQuoteModalOpen(true)}>Get Quote</span>
               </button>
               <div className="flex justify-center pt-2">
                 <ThemeToggle />
@@ -99,6 +101,11 @@ const Header = () => {
           </div>
         )}
       </nav>
+      
+      <QuoteModal 
+        isOpen={isQuoteModalOpen} 
+        onClose={() => setIsQuoteModalOpen(false)} 
+      />
     </header>
   );
 };

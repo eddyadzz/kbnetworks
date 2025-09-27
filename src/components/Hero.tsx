@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Shield, Monitor, Wifi, ArrowRight, Play } from 'lucide-react';
+import QuoteModal from './QuoteModal';
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -74,8 +76,11 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <button className="group bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-2xl flex items-center gap-2" style={{backgroundColor: '#2563eb'}}>
-              Explore Services
+            <button 
+              onClick={() => setIsQuoteModalOpen(true)}
+              className="group bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-2xl flex items-center gap-2"
+            >
+              Get Free Quote
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
             <button className="group flex items-center gap-3 text-white hover:text-blue-300 transition-colors duration-300">
@@ -110,6 +115,11 @@ const Hero = () => {
           <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
+      
+      <QuoteModal 
+        isOpen={isQuoteModalOpen} 
+        onClose={() => setIsQuoteModalOpen(false)} 
+      />
     </section>
   );
 };

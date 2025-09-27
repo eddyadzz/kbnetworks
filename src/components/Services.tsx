@@ -1,7 +1,10 @@
 import React from 'react';
 import { Shield, Monitor, Wifi, Camera, Server, Router, ArrowRight } from 'lucide-react';
+import QuoteModal from './QuoteModal';
 
 const Services = () => {
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = React.useState(false);
+
   const services = [
     {
       icon: Shield,
@@ -124,12 +127,20 @@ const Services = () => {
             <p className="text-xl mb-8 opacity-90">
               Get a free consultation and discover how our technology solutions can enhance your operations.
             </p>
-            <button className="bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <button 
+              onClick={() => setIsQuoteModalOpen(true)}
+              className="bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transform hover:scale-105 transition-all duration-300 shadow-lg"
+            >
               Schedule Consultation
             </button>
           </div>
         </div>
       </div>
+      
+      <QuoteModal 
+        isOpen={isQuoteModalOpen} 
+        onClose={() => setIsQuoteModalOpen(false)} 
+      />
     </section>
   );
 };
