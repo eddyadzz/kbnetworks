@@ -18,6 +18,7 @@ const Footer = () => {
     'About Us',
     'Our Services',
     'Portfolio',
+    'Portfolio',
     'Contact',
     'Support'
   ];
