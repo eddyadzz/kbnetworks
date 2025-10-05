@@ -1,9 +1,12 @@
 import React from 'react';
 import { Shield, Monitor, Wifi, Camera, Server, Router, ArrowRight } from 'lucide-react';
 import QuoteModal from './QuoteModal';
+import ServiceModal from './ServiceModal';
 
 const Services = () => {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = React.useState(false);
+  const [selectedService, setSelectedService] = React.useState<any>(null);
+  const [isServiceModalOpen, setIsServiceModalOpen] = React.useState(false);
 
   const services = [
     {
@@ -12,7 +15,43 @@ const Services = () => {
       description: 'State-of-the-art surveillance solutions with HD cameras, night vision, and remote monitoring capabilities for complete security coverage.',
       features: ['HD/4K Resolution', 'Night Vision', 'Remote Monitoring', 'Motion Detection'],
       gradient: 'from-blue-500 to-cyan-400',
-      image: 'https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg?auto=compress&cs=tinysrgb&w=500'
+      image: 'https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg?auto=compress&cs=tinysrgb&w=500',
+      detailedFeatures: [
+        'Ultra HD 4K Resolution Cameras',
+        'Advanced Night Vision Technology',
+        '24/7 Remote Monitoring & Alerts',
+        'AI-Powered Motion Detection',
+        'Weather-Resistant Design',
+        'Mobile App Integration',
+        'Cloud Storage Options',
+        'Professional Installation'
+      ],
+      benefits: [
+        'Enhanced security and peace of mind',
+        'Deterrent effect on potential intruders',
+        'Evidence collection for incidents',
+        'Remote monitoring from anywhere',
+        'Insurance premium reductions',
+        'Professional 24/7 support'
+      ],
+      process: [
+        'Site survey and security assessment',
+        'Custom system design and planning',
+        'Professional installation and setup',
+        'System testing and configuration',
+        'Training and handover',
+        'Ongoing support and maintenance'
+      ],
+      pricing: {
+        basic: 'From $2,500',
+        premium: 'From $5,000',
+        enterprise: 'Custom Quote'
+      },
+      testimonial: {
+        text: 'KB Networks installed our resort security system flawlessly. The quality and service exceeded our expectations.',
+        author: 'Ahmed Hassan',
+        company: 'Paradise Resort Maldives'
+      }
     },
     {
       icon: Monitor,
@@ -20,7 +59,44 @@ const Services = () => {
       description: 'Comprehensive IT infrastructure services including system integration, software solutions, and technical support for modern businesses.',
       features: ['System Integration', 'Software Solutions', '24/7 Support', 'Cloud Services'],
       gradient: 'from-blue-600 to-blue-400',
-      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=500'
+      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=500',
+      detailedFeatures: [
+        'Complete IT Infrastructure Setup',
+        'Server Installation & Configuration',
+        'Software Deployment & Integration',
+        'Data Backup & Recovery Solutions',
+        'Cybersecurity Implementation',
+        'Cloud Migration Services',
+        'IT Consulting & Strategy',
+        'Ongoing Technical Support'
+      ],
+      benefits: [
+        'Improved operational efficiency',
+        'Reduced IT costs and complexity',
+        'Enhanced data security',
+        'Scalable solutions for growth',
+        'Minimized downtime',
+        'Expert technical guidance'
+      ],
+      process: [
+        'IT infrastructure assessment',
+        'Solution design and planning',
+        'Hardware and software procurement',
+        'Installation and configuration',
+        'Testing and optimization',
+        'Staff training and documentation',
+        'Ongoing support and maintenance'
+      ],
+      pricing: {
+        basic: 'From $3,000',
+        premium: 'From $8,000',
+        enterprise: 'Custom Quote'
+      },
+      testimonial: {
+        text: 'Their IT solutions transformed our business operations. Professional service and excellent ongoing support.',
+        author: 'Mariyam Ali',
+        company: 'Maldives Trading Co.'
+      }
     },
     {
       icon: Wifi,
@@ -28,10 +104,56 @@ const Services = () => {
       description: 'Professional network setup, Wi-Fi installation, and connectivity solutions designed to keep your business connected reliably.',
       features: ['Network Setup', 'Wi-Fi Installation', 'Fiber Optic', 'Network Security'],
       gradient: 'from-green-500 to-emerald-400',
-      image: 'https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=500'
+      image: 'https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=500',
+      detailedFeatures: [
+        'High-Speed Network Infrastructure',
+        'Enterprise Wi-Fi Solutions',
+        'Fiber Optic Installation',
+        'Network Security & Firewalls',
+        'Load Balancing & Redundancy',
+        'VPN Setup & Configuration',
+        'Network Monitoring & Management',
+        'Bandwidth Optimization'
+      ],
+      benefits: [
+        'Reliable high-speed connectivity',
+        'Seamless wireless coverage',
+        'Enhanced network security',
+        'Improved productivity',
+        'Future-proof infrastructure',
+        'Professional network management'
+      ],
+      process: [
+        'Network requirements analysis',
+        'Site survey and planning',
+        'Equipment procurement',
+        'Professional installation',
+        'Configuration and testing',
+        'Performance optimization',
+        'Ongoing monitoring and support'
+      ],
+      pricing: {
+        basic: 'From $1,500',
+        premium: 'From $4,000',
+        enterprise: 'Custom Quote'
+      },
+      testimonial: {
+        text: 'Excellent networking solutions with reliable performance. Their team is knowledgeable and responsive.',
+        author: 'Ibrahim Mohamed',
+        company: 'Ocean View Hotel'
+      }
     }
   ];
 
+  const handleServiceClick = (service: any) => {
+    setSelectedService(service);
+    setIsServiceModalOpen(true);
+  };
+
+  const handleLearnMoreClick = (e: React.MouseEvent, service: any) => {
+    e.stopPropagation();
+    handleServiceClick(service);
+  };
   return (
     <section id="services" className="py-24 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
       {/* Background Pattern */}
@@ -60,7 +182,8 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 transition-all duration-500 transform hover:scale-105 hover:-rotate-1"
+              className="group relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 transition-all duration-500 transform hover:scale-105 hover:-rotate-1 cursor-pointer"
+              onClick={() => handleServiceClick(service)}
               style={{ 
                 perspective: '1000px',
                 transformStyle: 'preserve-3d'
@@ -106,7 +229,10 @@ const Services = () => {
                 </div>
 
                 {/* CTA */}
-                <button className={`group/btn flex items-center gap-2 text-transparent bg-gradient-to-r ${service.gradient} bg-clip-text font-semibold hover:gap-3 transition-all duration-300`}>
+                <button 
+                  onClick={(e) => handleLearnMoreClick(e, service)}
+                  className={`group/btn flex items-center gap-2 text-transparent bg-gradient-to-r ${service.gradient} bg-clip-text font-semibold hover:gap-3 transition-all duration-300`}
+                >
                   Learn More
                   <ArrowRight className="w-4 h-4 text-blue-500 dark:text-blue-400 group-hover/btn:translate-x-1 transition-transform duration-300" />
                 </button>
@@ -140,6 +266,11 @@ const Services = () => {
       <QuoteModal 
         isOpen={isQuoteModalOpen} 
         onClose={() => setIsQuoteModalOpen(false)} 
+      />
+      <ServiceModal 
+        isOpen={isServiceModalOpen} 
+        onClose={() => setIsServiceModalOpen(false)}
+        service={selectedService}
       />
     </section>
   );
