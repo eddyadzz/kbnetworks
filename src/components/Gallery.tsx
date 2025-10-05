@@ -61,7 +61,9 @@ const Gallery = () => {
           'https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=800',
           'https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=800',
           'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=800',
-          'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800'
+          'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800',
+          'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=800',
+          'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800'
         ];
         setImages(fallbackImages);
       } else {
@@ -74,25 +76,53 @@ const Gallery = () => {
     loadGalleryImages();
   }, []);
 
+  // Number of images to show at once (responsive)
+  const getImagesPerView = () => {
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth >= 1024) return 4; // Desktop: 4 images
+      if (window.innerWidth >= 768) return 3;  // Tablet: 3 images
+      if (window.innerWidth >= 640) return 2;  // Mobile: 2 images
+      return 1; // Small mobile: 1 image
+    }
+    return 4;
+  };
+
+  const [imagesPerView, setImagesPerView] = useState(getImagesPerView());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setImagesPerView(getImagesPerView());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+    if (images.length > imagesPerView) {
+      setCurrentIndex((prev) => {
+        const maxIndex = images.length - imagesPerView;
+        return prev >= maxIndex ? 0 : prev + 1;
+      });
+    }
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    if (images.length > imagesPerView) {
+      setCurrentIndex((prev) => {
+        const maxIndex = images.length - imagesPerView;
+        return prev <= 0 ? maxIndex : prev - 1;
+      });
+    }
   };
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
-
-  // Auto-advance carousel
+  // Auto-advance carousel slowly
   useEffect(() => {
-    if (images.length > 1) {
-      const interval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    if (images.length > imagesPerView) {
+      const interval = setInterval(nextSlide, 4000); // Change every 4 seconds
       return () => clearInterval(interval);
     }
-  }, [images.length]);
+  }, [images.length, imagesPerView]);
 
   if (isLoading) {
     return (
@@ -142,71 +172,86 @@ const Gallery = () => {
           </p>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative max-w-6xl mx-auto">
-          <div className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden rounded-3xl shadow-2xl">
-            {/* Images */}
+        {/* Multi-Image Carousel Container */}
+        <div className="relative max-w-7xl mx-auto">
+          <div className="relative overflow-hidden rounded-3xl">
+            {/* Images Grid */}
             <div 
-              className="flex transition-transform duration-500 ease-in-out h-full"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              className="flex transition-transform duration-1000 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * (100 / imagesPerView)}%)` }}
             >
               {images.map((image, index) => (
-                <div key={index} className="w-full h-full flex-shrink-0 relative">
-                  <img 
-                    src={image}
-                    alt={`Gallery image ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      // Fallback to placeholder if image fails to load
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                <div 
+                  key={index} 
+                  className="flex-shrink-0 px-2"
+                  style={{ width: `${100 / imagesPerView}%` }}
+                >
+                  <div className="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
+                    <img 
+                      src={image}
+                      alt={`Gallery image ${index + 1}`}
+                      className="w-full h-64 md:h-80 lg:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
+                      onError={(e) => {
+                        // Fallback to placeholder if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    {/* Subtle overlay on hover */}
+                    <div className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
                 </div>
               ))}
             </div>
 
             {/* Navigation Arrows */}
-            {images.length > 1 && (
+            {images.length > imagesPerView && (
               <>
                 <button
                   onClick={prevSlide}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-800 dark:text-white shadow-lg transition-all duration-300 hover:scale-110 z-10"
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
                 <button
                   onClick={nextSlide}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-800 dark:text-white shadow-lg transition-all duration-300 hover:scale-110 z-10"
                 >
                   <ChevronRight className="w-6 h-6" />
                 </button>
               </>
             )}
-
-            {/* Image Counter */}
-            <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
-              {currentIndex + 1} / {images.length}
-            </div>
           </div>
 
-          {/* Dots Indicator */}
-          {images.length > 1 && (
+          {/* Progress Indicator */}
+          {images.length > imagesPerView && (
             <div className="flex justify-center mt-8 space-x-2">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentIndex 
-                      ? 'bg-blue-600 scale-125' 
-                      : 'bg-gray-300 dark:bg-gray-600 hover:bg-blue-400'
-                  }`}
-                />
-              ))}
+              {Array.from({ length: Math.ceil(images.length / imagesPerView) }).map((_, index) => {
+                const maxIndex = images.length - imagesPerView;
+                const indicatorIndex = Math.min(index * imagesPerView, maxIndex);
+                return (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(indicatorIndex)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      Math.floor(currentIndex / imagesPerView) === index
+                        ? 'bg-blue-600 scale-125' 
+                        : 'bg-gray-300 dark:bg-gray-600 hover:bg-blue-400'
+                    }`}
+                  />
+                );
+              })}
             </div>
           )}
+
+          {/* Image Counter */}
+          <div className="text-center mt-6">
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              Showing {Math.min(currentIndex + imagesPerView, images.length)} of {images.length} images
+            </span>
+          </div>
         </div>
 
         {/* Stats Section */}
