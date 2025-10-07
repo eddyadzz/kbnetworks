@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Eye, EyeOff, Star, Search, Filter } from 'lucide-react';
+import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Star, Search, Filter } from 'lucide-react';
 import { getProjects, createProject, updateProject, deleteProject, type Project } from '../../lib/supabase';
 import ProjectForm from './ProjectForm';
 

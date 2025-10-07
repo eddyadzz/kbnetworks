@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Eye, EyeOff, Search, Filter, Image as ImageIcon } from 'lucide-react';
+import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Search, Filter, Image as ImageIcon } from 'lucide-react';
 import { getGalleryImages, createGalleryImage, updateGalleryImage, deleteGalleryImage, type GalleryImage } from '../../lib/supabase';
 import GalleryForm from './GalleryForm';
 
