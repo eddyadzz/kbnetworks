@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { getGalleryImages, type GalleryImage } from '../lib/supabase';
 
 const Gallery = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -7,54 +8,16 @@ const Gallery = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Auto-discover images in the gallery folder
-    const loadGalleryImages = async () => {
-      const imageExtensions = ['jpg', 'jpeg', 'png', 'webp'];
-      const discoveredImages: string[] = [];
+    loadGalleryImages();
+  }, []);
 
-      // Try to load images with common naming patterns
-      for (let i = 1; i <= 50; i++) {
-        for (const ext of imageExtensions) {
-          const imagePath = `/gallery/image-${i}.${ext}`;
-          try {
-            const response = await fetch(imagePath, { method: 'HEAD' });
-            if (response.ok) {
-              discoveredImages.push(imagePath);
-              break; // Found this image, move to next number
-            }
-          } catch (error) {
-            // Image doesn't exist, continue
-          }
-        }
-      }
-
-      // Also try common project image names
-      const commonNames = [
-        'cctv-installation-1', 'cctv-installation-2', 'cctv-installation-3',
-        'network-installation-1', 'network-installation-2', 
-        'wifi-installation-1', 'wifi-installation-2',
-        'it-setup-1', 'it-setup-2',
-        'security-camera-1', 'security-system-1',
-        'network-rack-1', 'server-room-1', 'control-room-1'
-      ];
-
-      for (const name of commonNames) {
-        for (const ext of imageExtensions) {
-          const imagePath = `/gallery/${name}.${ext}`;
-          try {
-            const response = await fetch(imagePath, { method: 'HEAD' });
-            if (response.ok && !discoveredImages.includes(imagePath)) {
-              discoveredImages.push(imagePath);
-              break;
-            }
-          } catch (error) {
-            // Image doesn't exist, continue
-          }
-        }
-      }
-
-      // Fallback to placeholder images if no images found
-      if (discoveredImages.length === 0) {
+  const loadGalleryImages = async () => {
+    try {
+      const galleryImages = await getGalleryImages(); // Only active images
+      const imageUrls = galleryImages.map(img => img.image_url);
+      
+      if (imageUrls.length === 0) {
+        // Fallback to placeholder images if no images found
         const fallbackImages = [
           'https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg?auto=compress&cs=tinysrgb&w=800',
           'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -67,14 +30,22 @@ const Gallery = () => {
         ];
         setImages(fallbackImages);
       } else {
-        setImages(discoveredImages);
+        setImages(imageUrls);
       }
-      
+    } catch (error) {
+      console.error('Error loading gallery images:', error);
+      // Fallback to placeholder images on error
+      const fallbackImages = [
+        'https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ];
+      setImages(fallbackImages);
+    } finally {
       setIsLoading(false);
-    };
-
-    loadGalleryImages();
-  }, []);
+    }
+  };
 
   // Number of images to show at once (responsive)
   const getImagesPerView = () => {

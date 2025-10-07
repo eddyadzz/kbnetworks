@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -9,6 +10,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Brands from './components/Brands';
 import Footer from './components/Footer';
+import AdminApp from './components/admin/AdminApp';
 
 function App() {
   useEffect(() => {
@@ -34,17 +36,24 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen">
-        <Header />
-        <Hero />
-        <Services />
-        <Portfolio />
-        <Gallery />
-        <About />
-        <Contact />
-        <Brands />
-        <Footer />
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/admin" element={<AdminApp />} />
+          <Route path="/" element={
+            <div className="min-h-screen">
+              <Header />
+              <Hero />
+              <Services />
+              <Portfolio />
+              <Gallery />
+              <About />
+              <Contact />
+              <Brands />
+              <Footer />
+            </div>
+          } />
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 }

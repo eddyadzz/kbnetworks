@@ -1,12 +1,32 @@
 import React, { useState } from 'react';
 import { ExternalLink, Calendar, MapPin, Users, Award, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { getProjects, type Project as ProjectType } from '../lib/supabase';
 
 const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [projects, setProjects] = useState<ProjectType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const projects = [
+  React.useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      const data = await getProjects(); // Only published projects
+      setProjects(data);
+    } catch (error) {
+      console.error('Error loading projects:', error);
+      // Fallback to static data if database fails
+      setProjects(staticProjects);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const staticProjects = [
     {
       id: 1,
       title: 'Paradise Resort Security System',
