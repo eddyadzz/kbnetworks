@@ -30,6 +30,8 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
 
     try {
       const { adminUser } = await signInAdmin(formData.email, formData.password);
+      // Store admin user in localStorage
+      localStorage.setItem('adminUser', JSON.stringify(adminUser));
       onLogin(adminUser);
     } catch (err: any) {
       setError(err.message || 'Login failed');

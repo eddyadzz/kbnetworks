@@ -75,53 +75,73 @@ export interface ProjectImage {
 
 // Auth functions
 export const signInAdmin = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-  
-  if (error) throw error;
-  
-  // Check if user is admin
+  // Note: This is a client-side implementation for demo purposes
+  // In production, password verification should happen server-side via an edge function
+
   const { data: adminUser, error: adminError } = await supabase
     .from('admin_users')
     .select('*')
     .eq('email', email)
     .eq('is_active', true)
-    .single();
-    
-  if (adminError || !adminUser) {
-    await supabase.auth.signOut();
-    throw new Error('Unauthorized: Admin access required');
+    .maybeSingle();
+
+  if (adminError) {
+    throw new Error('Authentication failed');
   }
-  
+
+  if (!adminUser) {
+    throw new Error('Invalid email or password');
+  }
+
+  // For demo: Simple password check (in production, use edge function with bcrypt)
+  // The default password is 'admin123' with bcrypt hash
+  const bcrypt = await import('bcryptjs');
+  const isValidPassword = await bcrypt.compare(password, adminUser.password_hash);
+
+  if (!isValidPassword) {
+    throw new Error('Invalid email or password');
+  }
+
   // Update last login
   await supabase
     .from('admin_users')
     .update({ last_login: new Date().toISOString() })
     .eq('id', adminUser.id);
-  
-  return { user: data.user, adminUser };
+
+  return { user: null, adminUser };
 };
 
 export const signOutAdmin = async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) throw error;
+  // Clear local session storage
+  localStorage.removeItem('adminUser');
 };
 
-export const getCurrentAdminUser = async () => {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
-  
-  const { data: adminUser, error } = await supabase
-    .from('admin_users')
-    .select('*')
-    .eq('id', user.id)
-    .eq('is_active', true)
-    .single();
-    
-  if (error) return null;
-  return adminUser;
+export const getCurrentAdminUser = async (): Promise<AdminUser | null> => {
+  // Get admin user from local storage
+  const storedUser = localStorage.getItem('adminUser');
+  if (!storedUser) return null;
+
+  try {
+    const adminUser = JSON.parse(storedUser);
+
+    // Verify user still exists and is active
+    const { data, error } = await supabase
+      .from('admin_users')
+      .select('*')
+      .eq('id', adminUser.id)
+      .eq('is_active', true)
+      .maybeSingle();
+
+    if (error || !data) {
+      localStorage.removeItem('adminUser');
+      return null;
+    }
+
+    return data as AdminUser;
+  } catch {
+    localStorage.removeItem('adminUser');
+    return null;
+  }
 };
 
 // Project functions
