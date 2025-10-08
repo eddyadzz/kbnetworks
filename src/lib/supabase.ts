@@ -279,6 +279,39 @@ export const deleteProjectImage = async (id: string) => {
     .from('project_images')
     .delete()
     .eq('id', id);
-    
+
   if (error) throw error;
+};
+
+export const changeAdminPassword = async (adminId: string, currentPassword: string, newPassword: string) => {
+  const { data: adminUser, error: fetchError } = await supabase
+    .from('admin_users')
+    .select('*')
+    .eq('id', adminId)
+    .maybeSingle();
+
+  if (fetchError || !adminUser) {
+    throw new Error('Admin user not found');
+  }
+
+  const bcrypt = await import('bcryptjs');
+  const isValidPassword = await bcrypt.compare(currentPassword, adminUser.password_hash);
+
+  if (!isValidPassword) {
+    throw new Error('Current password is incorrect');
+  }
+
+  const newPasswordHash = await bcrypt.hash(newPassword, 10);
+
+  const { error: updateError } = await supabase
+    .from('admin_users')
+    .update({
+      password_hash: newPasswordHash,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', adminId);
+
+  if (updateError) {
+    throw new Error('Failed to update password');
+  }
 };

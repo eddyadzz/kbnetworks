@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, FolderOpen, Image, Plus, Settings, BarChart3 } from 'lucide-react';
+import { LogOut, FolderOpen, Image, Plus, Settings, BarChart3, Key } from 'lucide-react';
 import { signOutAdmin, getProjects, getGalleryImages, type AdminUser } from '../../lib/supabase';
 import ProjectManager from './ProjectManager';
 import GalleryManager from './GalleryManager';
+import PasswordChange from './PasswordChange';
 
 interface AdminDashboardProps {
   adminUser: AdminUser;
@@ -18,6 +19,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ adminUser, onLogout }) 
     activeImages: 0
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [showPasswordChange, setShowPasswordChange] = useState(false);
 
   useEffect(() => {
     loadStats();
@@ -79,6 +81,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ adminUser, onLogout }) 
                 <p className="text-sm font-medium text-gray-900 dark:text-white">{adminUser.full_name}</p>
                 <p className="text-xs text-gray-600 dark:text-gray-400 capitalize">{adminUser.role}</p>
               </div>
+              <button
+                onClick={() => setShowPasswordChange(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200"
+                title="Change Password"
+              >
+                <Key className="w-4 h-4" />
+                Change Password
+              </button>
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-200"
@@ -204,6 +214,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ adminUser, onLogout }) 
         {activeTab === 'projects' && <ProjectManager onStatsUpdate={loadStats} />}
         {activeTab === 'gallery' && <GalleryManager onStatsUpdate={loadStats} />}
       </main>
+
+      {showPasswordChange && (
+        <PasswordChange
+          adminUser={adminUser}
+          onClose={() => setShowPasswordChange(false)}
+        />
+      )}
     </div>
   );
 };
