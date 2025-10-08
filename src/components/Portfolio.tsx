@@ -403,10 +403,14 @@ const Portfolio = () => {
             >
               {/* Project Image */}
               <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={project.image} 
+                <img
+                  src={project.featured_image_url || project.image || 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800'}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800';
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 
@@ -522,12 +526,19 @@ const Portfolio = () => {
                     {/* Image Gallery */}
                     <div className="relative">
                       <div className="relative overflow-hidden rounded-2xl">
-                        <img 
-                          src={selectedProject.images[currentImageIndex]} 
+                        <img
+                          src={(selectedProject.images && selectedProject.images.length > 0
+                            ? (selectedProject.images[currentImageIndex]?.image_url || selectedProject.images[currentImageIndex])
+                            : selectedProject.featured_image_url || selectedProject.image || 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800')
+                          }
                           alt={selectedProject.title}
                           className="w-full h-64 object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800';
+                          }}
                         />
-                        {selectedProject.images.length > 1 && (
+                        {selectedProject.images && selectedProject.images.length > 1 && (
                           <>
                             <button
                               onClick={prevImage}
@@ -544,7 +555,7 @@ const Portfolio = () => {
                           </>
                         )}
                       </div>
-                      {selectedProject.images.length > 1 && (
+                      {selectedProject.images && selectedProject.images.length > 1 && (
                         <div className="flex justify-center gap-2 mt-4">
                           {selectedProject.images.map((_, index) => (
                             <button

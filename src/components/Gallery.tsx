@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { getGalleryImages, type GalleryImage } from '../lib/supabase';
 
 const Gallery = () => {
   const [images, setImages] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
 
   useEffect(() => {
     loadGalleryImages();
@@ -152,26 +154,35 @@ const Gallery = () => {
               style={{ transform: `translateX(-${currentIndex * (100 / imagesPerView)}%)` }}
             >
               {images.map((image, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="flex-shrink-0 px-2"
                   style={{ width: `${100 / imagesPerView}%` }}
                 >
-                  <div className="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
-                    <img 
+                  <div
+                    className="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 cursor-pointer"
+                    onClick={() => {
+                      setLightboxImageIndex(index);
+                      setLightboxOpen(true);
+                    }}
+                  >
+                    <img
                       src={image}
                       alt={`Gallery image ${index + 1}`}
                       className="w-full h-64 md:h-80 lg:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
                       onError={(e) => {
-                        // Fallback to placeholder if image fails to load
                         const target = e.target as HTMLImageElement;
                         target.src = 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800';
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    {/* Subtle overlay on hover */}
-                    <div className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    {/* Zoom Icon on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <ZoomIn className="w-6 h-6 text-gray-800 dark:text-white" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -242,6 +253,52 @@ const Gallery = () => {
           ))}
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm">
+          <button
+            onClick={() => setLightboxOpen(false)}
+            className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors duration-200 z-10"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={() => {
+              setLightboxImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+            }}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors duration-200 z-10"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={() => {
+              setLightboxImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+            }}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors duration-200 z-10"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          <div className="max-w-7xl max-h-[90vh] px-4">
+            <img
+              src={images[lightboxImageIndex]}
+              alt={`Gallery image ${lightboxImageIndex + 1}`}
+              className="max-w-full max-h-[90vh] object-contain rounded-lg"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800';
+              }}
+            />
+          </div>
+
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
+            {lightboxImageIndex + 1} / {images.length}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
