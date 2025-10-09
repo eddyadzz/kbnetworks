@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Save, Image as ImageIcon } from 'lucide-react';
 import { type GalleryImage } from '../../lib/supabase';
+import ImageUpload from './ImageUpload';
 
 interface GalleryFormProps {
   image: GalleryImage | null;
@@ -84,8 +85,28 @@ const GalleryForm: React.FC<GalleryFormProps> = ({ image, onSubmit, onCancel }) 
           <div className="space-y-6">
             <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Image Information</h3>
-              
+
               <div className="space-y-4">
+                <ImageUpload
+                  onImageUploaded={(url) => {
+                    setFormData(prev => ({ ...prev, image_url: url }));
+                    setImagePreview(url);
+                  }}
+                  currentImage={formData.image_url}
+                  label="Upload Image"
+                />
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+                      OR enter URL manually
+                    </span>
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Image URL *

@@ -315,3 +315,26 @@ export const changeAdminPassword = async (adminId: string, currentPassword: stri
     throw new Error('Failed to update password');
   }
 };
+
+export const uploadImage = async (file: File, folder: string = 'uploads'): Promise<string> => {
+  const timestamp = Date.now();
+  const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+  const fileName = `${folder}/${timestamp}_${sanitizedName}`;
+
+  const { data, error } = await supabase.storage
+    .from('media')
+    .upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false
+    });
+
+  if (error) {
+    throw new Error(`Upload failed: ${error.message}`);
+  }
+
+  const { data: urlData } = supabase.storage
+    .from('media')
+    .getPublicUrl(fileName);
+
+  return urlData.publicUrl;
+};

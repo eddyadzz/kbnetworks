@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Save, Plus, X, Image } from 'lucide-react';
 import { type Project } from '../../lib/supabase';
+import ImageUpload from './ImageUpload';
 
 interface ProjectFormProps {
   project: Project | null;
@@ -326,6 +327,25 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, onSubmit, onCancel }
           </div>
 
           <div className="mt-6">
+            <ImageUpload
+              onImageUploaded={(url) => {
+                setFormData(prev => ({ ...prev, featured_image_url: url }));
+              }}
+              currentImage={formData.featured_image_url}
+              label="Featured Image"
+            />
+
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+                  OR enter URL manually
+                </span>
+              </div>
+            </div>
+
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Featured Image URL
             </label>
