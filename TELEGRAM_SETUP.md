@@ -50,27 +50,9 @@ TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
 TELEGRAM_CHAT_ID=-1001234567890
 ```
 
-## Step 5: Deploy the Edge Function
+**IMPORTANT**: The app now sends Telegram notifications directly from the browser using the Telegram Bot API, so you only need to set these in your `.env` file. No edge function deployment or Supabase configuration is required!
 
-The Telegram notification edge function needs to be deployed to Supabase:
-
-### Using Supabase Dashboard:
-
-1. Go to your Supabase Dashboard
-2. Navigate to "Edge Functions"
-3. Click "Create a new function"
-4. Name it: `send-telegram-notification`
-5. Copy the code from: `supabase/functions/send-telegram-notification/index.ts`
-6. Paste and deploy
-
-### Set Environment Variables in Supabase:
-
-1. In your Supabase Dashboard, go to "Project Settings" > "Edge Functions"
-2. Add these secrets:
-   - `TELEGRAM_BOT_TOKEN` - Your bot token
-   - `TELEGRAM_CHAT_ID` - Your chat ID
-
-## Step 6: Test the Integration
+## Step 5: Test the Integration
 
 1. Fill out the contact form on your website
 2. Check your Telegram group - you should receive a notification
@@ -80,10 +62,11 @@ The Telegram notification edge function needs to be deployed to Supabase:
 
 ### Not receiving messages?
 
-1. **Check bot token**: Make sure it's correct and active
+1. **Check bot token**: Make sure it's correct and active in your `.env` file
 2. **Verify chat ID**: Ensure the chat ID is correct (include the minus sign if present)
 3. **Bot permissions**: Make sure bot is admin of the group or can send messages
-4. **Environment variables**: Verify they're set correctly in both `.env` and Supabase
+4. **Environment variables**: Verify they're set correctly in your `.env` file
+5. **Restart dev server**: After changing `.env`, restart your development server
 
 ### Common Issues:
 

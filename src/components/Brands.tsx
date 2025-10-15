@@ -26,13 +26,91 @@ const Brands = () => {
         .eq('is_active', true)
         .order('display_order', { ascending: true });
 
-      if (error) throw error;
-      setBrands(data || []);
+      if (error) {
+        if (error.code === 'PGRST204' || error.message.includes('does not exist') || error.message.includes('schema cache')) {
+          console.warn('Brands table not found. Using default brands.');
+          setBrands(getDefaultBrands());
+        } else {
+          throw error;
+        }
+      } else {
+        setBrands(data || getDefaultBrands());
+      }
     } catch (error) {
       console.error('Error fetching brands:', error);
+      setBrands(getDefaultBrands());
     } finally {
       setLoading(false);
     }
+  };
+
+  const getDefaultBrands = (): Brand[] => {
+    return [
+      {
+        id: '1',
+        name: 'Hikvision',
+        category: 'CCTV Security',
+        logo_url: 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
+        display_order: 1,
+        is_active: true
+      },
+      {
+        id: '2',
+        name: 'Dahua',
+        category: 'Security Systems',
+        logo_url: 'https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
+        display_order: 2,
+        is_active: true
+      },
+      {
+        id: '3',
+        name: 'Ubiquiti',
+        category: 'Networking',
+        logo_url: 'https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
+        display_order: 3,
+        is_active: true
+      },
+      {
+        id: '4',
+        name: 'Cisco',
+        category: 'Enterprise Networking',
+        logo_url: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
+        display_order: 4,
+        is_active: true
+      },
+      {
+        id: '5',
+        name: 'Dell',
+        category: 'IT Infrastructure',
+        logo_url: 'https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
+        display_order: 5,
+        is_active: true
+      },
+      {
+        id: '6',
+        name: 'HP Enterprise',
+        category: 'Servers & Storage',
+        logo_url: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
+        display_order: 6,
+        is_active: true
+      },
+      {
+        id: '7',
+        name: 'Axis',
+        category: 'IP Cameras',
+        logo_url: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
+        display_order: 7,
+        is_active: true
+      },
+      {
+        id: '8',
+        name: 'Fortinet',
+        category: 'Cybersecurity',
+        logo_url: 'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
+        display_order: 8,
+        is_active: true
+      }
+    ];
   };
 
   if (loading) {

@@ -38,10 +38,19 @@ const BrandManager = () => {
         .select('*')
         .order('display_order', { ascending: true });
 
-      if (error) throw error;
-      setBrands(data || []);
+      if (error) {
+        if (error.message.includes('does not exist') || error.message.includes('schema cache')) {
+          console.warn('Brands table not found. Please apply the migration first.');
+          setBrands([]);
+        } else {
+          throw error;
+        }
+      } else {
+        setBrands(data || []);
+      }
     } catch (error) {
       console.error('Error fetching brands:', error);
+      setBrands([]);
     } finally {
       setLoading(false);
     }
@@ -94,7 +103,14 @@ const BrandManager = () => {
             is_active: formData.is_active,
           }]);
 
-        if (error) throw error;
+        if (error) {
+          if (error.message.includes('does not exist') || error.message.includes('schema cache')) {
+            alert('Brands table not found. Please apply the database migration first. See MIGRATION_INSTRUCTIONS.md');
+          } else {
+            throw error;
+          }
+          return;
+        }
       } else if (editingId) {
         const { error } = await supabase
           .from('brands')
@@ -107,7 +123,14 @@ const BrandManager = () => {
           })
           .eq('id', editingId);
 
-        if (error) throw error;
+        if (error) {
+          if (error.message.includes('does not exist') || error.message.includes('schema cache')) {
+            alert('Brands table not found. Please apply the database migration first. See MIGRATION_INSTRUCTIONS.md');
+          } else {
+            throw error;
+          }
+          return;
+        }
       }
 
       await fetchBrands();

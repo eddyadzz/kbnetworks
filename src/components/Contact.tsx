@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Clock, MessageCircle, CheckCircle } from 'lucide-react';
+import { sendTelegramNotification } from '../utils/telegram';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -24,28 +25,15 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-      const response = await fetch(`${supabaseUrl}/functions/v1/send-telegram-notification`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseKey}`,
-        },
-        body: JSON.stringify({
-          type: 'contact',
-          data: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            company: formData.service,
-            message: formData.message,
-          }
-        })
+      const success = await sendTelegramNotification('contact', {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.service,
+        message: formData.message,
       });
 
-      if (!response.ok) {
+      if (!success) {
         throw new Error('Failed to send message');
       }
 

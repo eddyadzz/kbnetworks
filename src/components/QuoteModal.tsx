@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Send, CheckCircle, Calculator, Clock, Shield } from 'lucide-react';
+import { sendTelegramNotification } from '../utils/telegram';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -35,31 +36,18 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
     setIsSubmitting(true);
 
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-      const response = await fetch(`${supabaseUrl}/functions/v1/send-telegram-notification`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseKey}`,
-        },
-        body: JSON.stringify({
-          type: 'quote',
-          data: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            company: formData.company,
-            service: `${formData.service} - ${formData.projectType}`,
-            budget: formData.budget,
-            timeline: formData.timeline,
-            message: `Location: ${formData.location}\n\nDetails:\n${formData.description}\n\nPriority: ${formData.urgency.toUpperCase()}`,
-          }
-        })
+      const success = await sendTelegramNotification('quote', {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        service: `${formData.service} - ${formData.projectType}`,
+        budget: formData.budget,
+        timeline: formData.timeline,
+        message: `Location: ${formData.location}\n\nDetails:\n${formData.description}\n\nPriority: ${formData.urgency.toUpperCase()}`,
       });
 
-      if (!response.ok) {
+      if (!success) {
         throw new Error('Failed to send quote request');
       }
 
