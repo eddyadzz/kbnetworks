@@ -14,8 +14,8 @@ export async function sendTelegramNotification(
   data: TelegramMessageData
 ): Promise<boolean> {
   try {
-    const botToken = import.meta.env.TELEGRAM_BOT_TOKEN;
-    const chatId = import.meta.env.TELEGRAM_CHAT_ID;
+    const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+    const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
 
     if (!botToken || !chatId) {
       console.error('Telegram credentials not configured');

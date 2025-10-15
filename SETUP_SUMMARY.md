@@ -19,8 +19,8 @@
 Edit your `.env` file and replace these values:
 
 ```env
-TELEGRAM_BOT_TOKEN=your_actual_bot_token_here
-TELEGRAM_CHAT_ID=your_actual_chat_id_here
+VITE_TELEGRAM_BOT_TOKEN=your_actual_bot_token_here
+VITE_TELEGRAM_CHAT_ID=your_actual_chat_id_here
 ```
 
 **Need help getting these?** See `TELEGRAM_SETUP.md` for detailed instructions.

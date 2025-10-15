@@ -40,14 +40,14 @@ This guide will help you set up Telegram notifications for form submissions.
 1. Open the `.env` file in your project
 2. Replace the placeholders with your actual values:
    ```
-   TELEGRAM_BOT_TOKEN=your_actual_bot_token_here
-   TELEGRAM_CHAT_ID=your_actual_chat_id_here
+   VITE_TELEGRAM_BOT_TOKEN=your_actual_bot_token_here
+   VITE_TELEGRAM_CHAT_ID=your_actual_chat_id_here
    ```
 
 Example:
 ```
-TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
-TELEGRAM_CHAT_ID=-1001234567890
+VITE_TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+VITE_TELEGRAM_CHAT_ID=-1001234567890
 ```
 
 **IMPORTANT**: The app now sends Telegram notifications directly from the browser using the Telegram Bot API, so you only need to set these in your `.env` file. No edge function deployment or Supabase configuration is required!

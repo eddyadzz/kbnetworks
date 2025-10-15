@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Supabase Connection</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Testing Supabase Connection</h1>
+    <div id="results"></div>
+    <script type="module">
+        const SUPABASE_URL = 'https://lidhgecwgvgqgqqunmeu.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpZGhnZWN3Z3ZncWdxcXVubWV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk4NTEwNzUsImV4cCI6MjA3NTQyNzA3NX0.jCa8hzGSfqoyjy84su6d-cvDT08RsAKyeL0_HWMhxB0';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const results = document.getElementById('results');
+
+        async function testConnection() {
+            results.innerHTML = '<p>Testing connection...</p>';
+
+            // Test 1: Check brands table
+            results.innerHTML += '<h2>Test 1: Check brands table</h2>';
+            try {
+                const { data, error } = await supabase
+                    .from('brands')
+                    .select('*')
+                    .limit(1);
+
+                if (error) {
+                    results.innerHTML += `<p style="color: red;">❌ Error: ${error.message}</p>`;
+                    results.innerHTML += `<p>Code: ${error.code}</p>`;
+                    results.innerHTML += `<p><strong>Table does not exist or is not accessible</strong></p>`;
+                } else {
+                    results.innerHTML += `<p style="color: green;">✅ Table exists! Found ${data?.length || 0} rows</p>`;
+                    if (data && data.length > 0) {
+                        results.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    }
+                }
+            } catch (err) {
+                results.innerHTML += `<p style="color: red;">❌ Exception: ${err.message}</p>`;
+            }
+
+            // Test 2: List all tables
+            results.innerHTML += '<h2>Test 2: Try to list tables</h2>';
+            try {
+                const { data, error } = await supabase.rpc('get_tables');
+                if (error) {
+                    results.innerHTML += `<p style="color: orange;">⚠️ Cannot list tables: ${error.message}</p>`;
+                } else {
+                    results.innerHTML += `<p>Available tables:</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (err) {
+                results.innerHTML += `<p style="color: orange;">⚠️ RPC not available</p>`;
+            }
+
+            // Test 3: Check other tables
+            results.innerHTML += '<h2>Test 3: Check other tables (projects)</h2>';
+            try {
+                const { data, error } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .limit(1);
+
+                if (error) {
+                    results.innerHTML += `<p style="color: red;">❌ Projects table error: ${error.message}</p>`;
+                } else {
+                    results.innerHTML += `<p style="color: green;">✅ Projects table accessible</p>`;
+                }
+            } catch (err) {
+                results.innerHTML += `<p style="color: red;">❌ Exception: ${err.message}</p>`;
+            }
+        }
+
+        testConnection();
+    </script>
+</body>
+</html>
