@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Monitor, Wifi, Camera, Server, Router, ArrowRight } from 'lucide-react';
+import { Shield, Monitor, Wifi, Camera, Server, Router, ArrowRight, Globe } from 'lucide-react';
 import QuoteModal from './QuoteModal';
 import ServiceModal from './ServiceModal';
 
@@ -142,6 +142,51 @@ const Services = () => {
         author: 'Ibrahim Mohamed',
         company: 'Ocean View Hotel'
       }
+    },
+    {
+      icon: Globe,
+      title: 'Web Design & Development',
+      description: 'Custom website design and development services that deliver stunning, responsive websites optimized for performance and conversions.',
+      features: ['Responsive Design', 'SEO Optimization', 'E-Commerce', 'Custom Development'],
+      gradient: 'from-purple-500 to-pink-400',
+      image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=500',
+      detailedFeatures: [
+        'Custom Website Design',
+        'Responsive Mobile-First Development',
+        'Search Engine Optimization (SEO)',
+        'E-Commerce Solutions',
+        'Content Management Systems',
+        'Web Application Development',
+        'Website Maintenance & Support',
+        'Performance Optimization'
+      ],
+      benefits: [
+        'Professional online presence',
+        'Increased customer engagement',
+        'Better search engine rankings',
+        'Enhanced brand credibility',
+        'Mobile-friendly experience',
+        'Scalable web solutions'
+      ],
+      process: [
+        'Discovery and requirements gathering',
+        'Design mockups and prototyping',
+        'Development and implementation',
+        'Content creation and integration',
+        'Testing across devices',
+        'Launch and deployment',
+        'Training and ongoing support'
+      ],
+      pricing: {
+        basic: 'From $2,000',
+        premium: 'From $6,000',
+        enterprise: 'Custom Quote'
+      },
+      testimonial: {
+        text: 'KB Networks created a beautiful website for our business. Professional work and great attention to detail.',
+        author: 'Aishath Rana',
+        company: 'Coral Reef Diving'
+      }
     }
   ];
 
@@ -178,7 +223,7 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {services.map((service, index) => (
             <div
               key={index}

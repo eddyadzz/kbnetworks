@@ -1,48 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
+
+interface Brand {
+  id: string;
+  name: string;
+  category: string;
+  logo_url: string | null;
+  display_order: number;
+  is_active: boolean;
+}
 
 const Brands = () => {
-  const brands = [
-    {
-      name: 'Hikvision',
-      logo: 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
-      category: 'CCTV Security'
-    },
-    {
-      name: 'Dahua',
-      logo: 'https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
-      category: 'Security Systems'
-    },
-    {
-      name: 'Ubiquiti',
-      logo: 'https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
-      category: 'Networking'
-    },
-    {
-      name: 'Cisco',
-      logo: 'https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
-      category: 'Enterprise Networking'
-    },
-    {
-      name: 'Dell',
-      logo: 'https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
-      category: 'IT Infrastructure'
-    },
-    {
-      name: 'HP Enterprise',
-      logo: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
-      category: 'Servers & Storage'
-    },
-    {
-      name: 'Axis',
-      logo: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
-      category: 'IP Cameras'
-    },
-    {
-      name: 'Fortinet',
-      logo: 'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=200&h=100',
-      category: 'Cybersecurity'
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBrands();
+  }, []);
+
+  const fetchBrands = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('brands')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+      setBrands(data || []);
+    } catch (error) {
+      console.error('Error fetching brands:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div className="container mx-auto px-6">
+          <div className="text-center text-gray-600 dark:text-gray-400">Loading brands...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (brands.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-16 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
@@ -68,14 +73,22 @@ const Brands = () => {
                 style={{ minWidth: '200px' }}
               >
                 <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 h-24 flex items-center justify-center border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-gray-800 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                      {brand.name}
+                  {brand.logo_url ? (
+                    <img
+                      src={brand.logo_url}
+                      alt={brand.name}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  ) : (
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-gray-800 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                        {brand.name}
+                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        {brand.category}
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {brand.category}
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -87,14 +100,22 @@ const Brands = () => {
                 style={{ minWidth: '200px' }}
               >
                 <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 h-24 flex items-center justify-center border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-gray-800 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                      {brand.name}
+                  {brand.logo_url ? (
+                    <img
+                      src={brand.logo_url}
+                      alt={brand.name}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  ) : (
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-gray-800 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                        {brand.name}
+                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        {brand.category}
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {brand.category}
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             ))}

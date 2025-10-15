@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, FolderOpen, Image, Plus, Settings, BarChart3, Key } from 'lucide-react';
+import { LogOut, FolderOpen, Image, Plus, Settings, BarChart3, Key, Award } from 'lucide-react';
 import { signOutAdmin, getProjects, getGalleryImages, type AdminUser } from '../../lib/supabase';
 import ProjectManager from './ProjectManager';
 import GalleryManager from './GalleryManager';
+import BrandManager from './BrandManager';
 import PasswordChange from './PasswordChange';
 
 interface AdminDashboardProps {
@@ -11,7 +12,7 @@ interface AdminDashboardProps {
 }
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ adminUser, onLogout }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'gallery'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'gallery' | 'brands'>('overview');
   const [stats, setStats] = useState({
     totalProjects: 0,
     publishedProjects: 0,
@@ -57,7 +58,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ adminUser, onLogout }) 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: BarChart3 },
     { id: 'projects', label: 'Projects', icon: FolderOpen },
-    { id: 'gallery', label: 'Gallery', icon: Image }
+    { id: 'gallery', label: 'Gallery', icon: Image },
+    { id: 'brands', label: 'Brands', icon: Award }
   ];
 
   return (
@@ -213,6 +215,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ adminUser, onLogout }) 
 
         {activeTab === 'projects' && <ProjectManager onStatsUpdate={loadStats} />}
         {activeTab === 'gallery' && <GalleryManager onStatsUpdate={loadStats} />}
+        {activeTab === 'brands' && <BrandManager />}
       </main>
 
       {showPasswordChange && (
