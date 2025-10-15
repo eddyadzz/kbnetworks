@@ -50,8 +50,8 @@ CREATE POLICY "Admins can view all brands"
   TO authenticated
   USING (
     EXISTS (
-      SELECT 1 FROM admins
-      WHERE admins.id = auth.uid()
+      SELECT 1 FROM admin_users
+      WHERE admin_users.id = auth.uid()
     )
   );
 
@@ -62,8 +62,8 @@ CREATE POLICY "Admins can insert brands"
   TO authenticated
   WITH CHECK (
     EXISTS (
-      SELECT 1 FROM admins
-      WHERE admins.id = auth.uid()
+      SELECT 1 FROM admin_users
+      WHERE admin_users.id = auth.uid()
     )
   );
 
@@ -74,14 +74,14 @@ CREATE POLICY "Admins can update brands"
   TO authenticated
   USING (
     EXISTS (
-      SELECT 1 FROM admins
-      WHERE admins.id = auth.uid()
+      SELECT 1 FROM admin_users
+      WHERE admin_users.id = auth.uid()
     )
   )
   WITH CHECK (
     EXISTS (
-      SELECT 1 FROM admins
-      WHERE admins.id = auth.uid()
+      SELECT 1 FROM admin_users
+      WHERE admin_users.id = auth.uid()
     )
   );
 
@@ -92,8 +92,8 @@ CREATE POLICY "Admins can delete brands"
   TO authenticated
   USING (
     EXISTS (
-      SELECT 1 FROM admins
-      WHERE admins.id = auth.uid()
+      SELECT 1 FROM admin_users
+      WHERE admin_users.id = auth.uid()
     )
   );
 

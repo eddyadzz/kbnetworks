@@ -33,31 +33,61 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    // Reset form after 3 seconds and close modal
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        service: '',
-        projectType: '',
-        budget: '',
-        timeline: '',
-        location: '',
-        description: '',
-        urgency: 'normal'
+
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      const response = await fetch(`${supabaseUrl}/functions/v1/send-telegram-notification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseKey}`,
+        },
+        body: JSON.stringify({
+          type: 'quote',
+          data: {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            company: formData.company,
+            service: `${formData.service} - ${formData.projectType}`,
+            budget: formData.budget,
+            timeline: formData.timeline,
+            message: `Location: ${formData.location}\n\nDetails:\n${formData.description}\n\nPriority: ${formData.urgency.toUpperCase()}`,
+          }
+        })
       });
-      onClose();
-    }, 3000);
+
+      if (!response.ok) {
+        throw new Error('Failed to send quote request');
+      }
+
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          service: '',
+          projectType: '',
+          budget: '',
+          timeline: '',
+          location: '',
+          description: '',
+          urgency: 'normal'
+        });
+        onClose();
+      }, 3000);
+    } catch (error) {
+      console.error('Error submitting quote:', error);
+      alert('Failed to send quote request. Please try again or contact us directly.');
+      setIsSubmitting(false);
+    }
   };
 
   const services = [
