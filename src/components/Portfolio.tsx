@@ -319,10 +319,23 @@ const Portfolio = () => {
 
   const categories = ['All', 'CCTV Security', 'IT Solutions', 'Networking'];
   const [activeCategory, setActiveCategory] = useState('All');
+  const [visibleCount, setVisibleCount] = useState(4);
 
-  const filteredProjects = activeCategory === 'All' 
-    ? projects 
+  const filteredProjects = activeCategory === 'All'
+    ? projects
     : projects.filter(project => project.category === activeCategory);
+
+  const displayedProjects = filteredProjects.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredProjects.length;
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 4);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    setVisibleCount(4);
+  };
 
   const openProjectModal = (project: any) => {
     setSelectedProject(project);
@@ -381,7 +394,7 @@ const Portfolio = () => {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => handleCategoryChange(category)}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 activeCategory === category
                   ? 'bg-white text-blue-600 shadow-lg transform scale-105'
@@ -395,7 +408,7 @@ const Portfolio = () => {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {filteredProjects.map((project) => (
+          {displayedProjects.map((project) => (
             <div
               key={project.id}
               className="group bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 dark:border-white/10 hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:-rotate-1 cursor-pointer"
@@ -470,6 +483,21 @@ const Portfolio = () => {
             </div>
           ))}
         </div>
+
+        {/* Load More Button */}
+        {hasMore && (
+          <div className="flex justify-center mt-12">
+            <button
+              onClick={handleLoadMore}
+              className="group bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 border border-white/20 hover:border-white/40 transform hover:scale-105 flex items-center gap-3 shadow-lg hover:shadow-xl"
+            >
+              <span>Load More Projects</span>
+              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
+                <ChevronRight className="w-4 h-4" />
+              </div>
+            </button>
+          </div>
+        )}
 
         {/* Stats Section */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
